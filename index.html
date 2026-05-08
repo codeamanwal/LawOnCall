@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LawOnCall — Justice, On Demand</title>
+  <meta name="description" content="Legal help at the speed of a phone call. LawOnCall connects you with verified lawyers in minutes. Coming soon."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dim: rgba(201,168,76,0.15);
+      --ink: #0C0C0E;
+      --ink-soft: #111115;
+      --parchment: #F5F0E8;
+      --parchment-dim: rgba(245,240,232,0.06);
+      --white: #FAFAF8;
+      --muted: rgba(245,240,232,0.4);
+      --border: rgba(201,168,76,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--parchment);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .bg-gradient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #0C0C0E 0%, #0f0f14 100%);
+    }
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, black 30%, transparent 80%);
+    }
+    .bg-noise {
+      position: absolute; inset: 0; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 48px 24px;
+    }
+
+    /* ── LOGO MARK ── */
+    .logo-wrap {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 64px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+    }
+    .logo-icon {
+      width: 44px; height: 44px;
+      position: relative; flex-shrink: 0;
+    }
+    .logo-icon svg { width: 100%; height: 100%; }
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--parchment);
+    }
+    .logo-text span { color: var(--gold); }
+
+    /* ── PILL BADGE ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border);
+      background: var(--gold-dim);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.25s forwards;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .badge-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold-light);
+    }
+
+    /* ── HEADLINE ── */
+    .headline-wrap {
+      text-align: center; max-width: 760px;
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;
+    }
+    .headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 300; line-height: 1.0;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .headline em {
+      font-style: italic; color: var(--gold);
+      font-weight: 300;
+    }
+    .headline .line2 {
+      display: block;
+      font-size: clamp(48px, 7.5vw, 90px);
+    }
+
+    /* ── SUBHEAD ── */
+    .subhead {
+      text-align: center; max-width: 480px;
+      margin-bottom: 56px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.55s forwards;
+    }
+    .subhead p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--muted); font-weight: 300;
+    }
+    .subhead strong {
+      color: rgba(245,240,232,0.75); font-weight: 400;
+    }
+
+    /* ── DIVIDER ── */
+    .ornament {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 56px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+    }
+    .ornament-line { flex: 1; height: 1px; background: var(--border); max-width: 80px; }
+    .ornament-icon { color: var(--gold); font-size: 18px; opacity: 0.7; }
+
+    /* ── WAITLIST FORM ── */
+    .form-wrap {
+      width: 100%; max-width: 420px;
+      margin-bottom: 72px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.7s forwards;
+    }
+    .form-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px; text-align: center;
+    }
+    .form-row {
+      display: flex; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: rgba(245,240,232,0.03);
+      transition: border-color 0.2s;
+      overflow: hidden;
+    }
+    .form-row:focus-within {
+      border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+    }
+    .form-input {
+      flex: 1; background: transparent; border: none; outline: none;
+      padding: 14px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; color: var(--parchment);
+      font-weight: 300;
+    }
+    .form-input::placeholder { color: rgba(245,240,232,0.3); }
+    .form-btn {
+      background: var(--gold);
+      border: none; cursor: pointer;
+      padding: 14px 22px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink);
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .form-btn:hover { background: var(--gold-light); }
+    .form-btn:active { transform: scale(0.98); }
+    .form-note {
+      text-align: center; margin-top: 12px;
+      font-size: 12px; color: rgba(245,240,232,0.25);
+      font-weight: 300;
+    }
+    .form-error {
+      display: none; text-align: center;
+      margin-top: 10px;
+      font-size: 12px; color: #e07070; font-weight: 300;
+    }
+    .form-success {
+      display: none; text-align: center;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--gold-dim);
+    }
+    .form-success p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; color: var(--gold-light);
+      font-style: italic;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; max-width: 720px; width: 100%;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden;
+      margin-bottom: 80px;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.85s forwards;
+    }
+    .feature {
+      background: var(--ink-soft);
+      padding: 28px 24px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .feature:hover { background: rgba(201,168,76,0.05); }
+    .feature-icon {
+      font-size: 22px; margin-bottom: 12px; display: block;
+    }
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-weight: 600;
+      color: var(--parchment); margin-bottom: 6px;
+    }
+    .feature-desc {
+      font-size: 12px; line-height: 1.6;
+      color: var(--muted); font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 1.0s forwards;
+    }
+    .footer-mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: 0.1em;
+      color: rgba(245,240,232,0.2);
+      text-transform: uppercase;
+    }
+    .footer-mono a {
+      color: rgba(201,168,76,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-mono a:hover { color: var(--gold); }
+
+    /* ── FLOATING SCALE DECORATION ── */
+    .deco-scales {
+      position: fixed; right: -60px; bottom: -40px;
+      width: 320px; opacity: 0.04;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .features { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; }
+      .form-btn { padding: 14px; text-align: center; }
+      .logo-wrap { margin-bottom: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-layer">
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<!-- Decorative scales of justice SVG -->
+<svg class="deco-scales" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line x1="100" y1="20" x2="100" y2="170" stroke="white" stroke-width="2"/>
+  <line x1="30" y1="60" x2="170" y2="60" stroke="white" stroke-width="2"/>
+  <circle cx="30" cy="60" r="30" stroke="white" stroke-width="2" fill="none"/>
+  <circle cx="170" cy="60" r="30" stroke="white" stroke-width="2" fill="none"/>
+  <line x1="30" y1="60" x2="60" y2="60" stroke="white" stroke-width="1.5"/>
+  <line x1="140" y1="60" x2="170" y2="60" stroke="white" stroke-width="1.5"/>
+  <rect x="85" y="168" width="30" height="8" stroke="white" stroke-width="2" fill="none"/>
+</svg>
+
+<main class="page">
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logo-icon">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="21" stroke="#C9A84C" stroke-width="1.2"/>
+        <line x1="22" y1="8" x2="22" y2="36" stroke="#C9A84C" stroke-width="1.2"/>
+        <line x1="10" y1="16" x2="34" y2="16" stroke="#C9A84C" stroke-width="1.2"/>
+        <path d="M10 16 C10 22 14 26 10 32" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M34 16 C34 22 30 26 34 32" stroke="#C9A84C" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <line x1="19" y1="36" x2="25" y2="36" stroke="#C9A84C" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <div class="logo-text">Law<span>OnCall</span></div>
+  </div>
+
+  <!-- Badge -->
+  <div class="badge">
+    <span class="badge-dot"></span>
+    <span class="badge-text">Coming Soon</span>
+  </div>
+
+  <!-- Headline -->
+  <div class="headline-wrap">
+    <h1 class="headline">
+      Legal help,
+      <em class="line2">on your terms.</em>
+    </h1>
+  </div>
+
+  <!-- Subhead -->
+  <div class="subhead">
+    <p>
+      A verified lawyer, <strong>within 60 minutes</strong> — for property disputes,
+      family matters, employment issues, and more.
+      No appointments. No waiting rooms. Just answers.
+    </p>
+  </div>
+
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <span class="ornament-icon">⚖</span>
+    <div class="ornament-line"></div>
+  </div>
+
+  <!-- Waitlist form -->
+  <div class="form-wrap">
+    <label class="form-label">Join the early access list</label>
+    <div class="form-row" id="formRow">
+      <input
+        class="form-input"
+        type="email"
+        id="emailInput"
+        placeholder="Your email address"
+        autocomplete="email"
+        inputmode="email"
+      />
+      <button class="form-btn" id="submitBtn" onclick="handleSubmit()">Notify Me</button>
+    </div>
+    <div class="form-error" id="errorMsg"></div>
+    <div class="form-success" id="successMsg">
+      <p>You're on the list. We'll write first. 🤝</p>
+    </div>
+    <p class="form-note">No spam. First access when we go live.</p>
+  </div>
+
+  <!-- Feature grid -->
+  <div class="features">
+    <div class="feature">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-title">ASAP Connect</div>
+      <p class="feature-desc">Speak to a verified lawyer within 60 minutes of submitting your query.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-title">Fully Private</div>
+      <p class="feature-desc">End-to-end confidential. Your case details never leave our secure system.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">⚖</span>
+      <div class="feature-title">Verified Lawyers</div>
+      <p class="feature-desc">Every advocate is bar council verified and category-matched to your issue.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-mono">
+      © 2026 LawOnCall &nbsp;·&nbsp;
+      <a href="mailto:hello@lawoncall.in">hello@lawoncall.in</a>
+      &nbsp;·&nbsp; India
+    </p>
+  </footer>
+
+</main>
+
+<script>
+  // ── Google Apps Script Web App URL ──
+  // SETUP INSTRUCTIONS (one-time, takes 3 minutes):
+  // 1. Open your Google Sheet
+  // 2. Go to Extensions → Apps Script
+  // 3. Paste the code from the comment block below, save, and deploy as Web App
+  //    (Execute as: Me, Who has access: Anyone)
+  // 4. Copy the deployment URL and replace APPS_SCRIPT_URL below
+  //
+  // ── Apps Script code to paste ──
+  // function doPost(e) {
+  //   var sheet = SpreadsheetApp.openById('19WPgO0R1z1-FMaYC750Uce6zzOt_sJPixdOzUmdgSPA').getActiveSheet();
+  //   var data = JSON.parse(e.postData.contents);
+  //   sheet.appendRow([new Date(), data.email]);
+  //   return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+  //     .setMimeType(ContentService.MimeType.JSON);
+  // }
+
+  const APPS_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_DEPLOYMENT_URL_HERE';
+
+  function handleSubmit() {
+    const input    = document.getElementById('emailInput');
+    const btn      = document.getElementById('submitBtn');
+    const row      = document.getElementById('formRow');
+    const errorMsg = document.getElementById('errorMsg');
+    const success  = document.getElementById('successMsg');
+
+    const email = input.value.trim();
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    // Reset error state
+    row.style.borderColor = '';
+    row.style.boxShadow = '';
+    errorMsg.style.display = 'none';
+
+    if (!validEmail) {
+      row.style.borderColor = '#C0392B';
+      row.style.boxShadow = '0 0 0 3px rgba(192,57,43,0.12)';
+      errorMsg.textContent = 'Please enter a valid email address.';
+      errorMsg.style.display = 'block';
+      input.focus();
+      return;
+    }
+
+    // Loading state
+    btn.textContent = '...';
+    btn.disabled = true;
+    input.disabled = true;
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',   // Apps Script requires no-cors
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+    .then(() => {
+      // no-cors means we can't read the response body — treat any completion as success
+      row.style.display = 'none';
+      errorMsg.style.display = 'none';
+      document.querySelector('.form-note').style.display = 'none';
+      success.style.display = 'block';
+    })
+    .catch(() => {
+      btn.textContent = 'Notify Me';
+      btn.disabled = false;
+      input.disabled = false;
+      errorMsg.textContent = 'Something went wrong. Please try again.';
+      errorMsg.style.display = 'block';
+    });
+  }
+
+  // Enter key support
+  document.getElementById('emailInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+</body>
+</html>
