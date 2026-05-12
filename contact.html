@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us — LawOnCall</title>
+    <meta
+      name="description"
+      content="Get in touch with the LawOnCall team. We'd love to hear from you."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ffffff'/%3E%3Cg stroke='%23B8922A' stroke-width='2.4' stroke-linecap='round' fill='none'%3E%3Cline x1='32' y1='10' x2='32' y2='54'/%3E%3Cline x1='14' y1='22' x2='50' y2='22'/%3E%3Cpath d='M14 22 C14 31 19 35 14 43'/%3E%3Cpath d='M50 22 C50 31 45 35 50 43'/%3E%3Cline x1='26' y1='54' x2='38' y2='54'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --gold: #b8922a;
+        --gold-hover: #9a7820;
+        --gold-dim: rgba(184, 146, 42, 0.09);
+        --gold-border: rgba(184, 146, 42, 0.22);
+        --ink: #12110e;
+        --ink-mid: #2c2a25;
+        --ink-soft: #4a4740;
+        --bg: #fafaf7;
+        --bg-card: #ffffff;
+        --muted: #7a7670;
+        --border: #e4e0d8;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "DM Sans", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .bg-gradient {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 70% 50% at 50% 0%,
+            rgba(184, 146, 42, 0.08) 0%,
+            transparent 65%
+          ),
+          radial-gradient(
+            ellipse 40% 30% at 90% 90%,
+            rgba(184, 146, 42, 0.05) 0%,
+            transparent 55%
+          ),
+          linear-gradient(180deg, #fafaf7 0%, #f4f1eb 100%);
+      }
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(184, 146, 42, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(184, 146, 42, 0.06) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(
+          ellipse 100% 55% at 50% 0%,
+          black 20%,
+          transparent 75%
+        );
+      }
+
+      nav {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 48px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(250, 250, 247, 0.85);
+        backdrop-filter: blur(12px);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        text-decoration: none;
+      }
+      .nav-logo-icon {
+        width: 34px;
+        height: 34px;
+      }
+      .nav-logo-icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      .nav-logo-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: var(--ink);
+      }
+      .nav-logo-text span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+      }
+      .nav-links a {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--gold);
+      }
+      .nav-links a.active {
+        border-bottom: 1px solid var(--gold);
+        padding-bottom: 2px;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 72px 24px 80px;
+      }
+
+      /* PAGE HEADER */
+      .page-header {
+        margin-bottom: 64px;
+        opacity: 0;
+        animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      }
+      .page-tag {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .page-tag::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--gold-border);
+        max-width: 60px;
+      }
+      .page-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(42px, 6vw, 76px);
+        font-weight: 300;
+        line-height: 1.05;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .page-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      /* TWO-COL LAYOUT */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 48px;
+        margin-bottom: 72px;
+      }
+
+      /* LEFT: info cards */
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        opacity: 0;
+        animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+      }
+      .info-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 28px 24px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      }
+      .info-card:hover {
+        border-color: var(--gold-border);
+        box-shadow: 0 4px 16px rgba(184, 146, 42, 0.08);
+      }
+      .info-icon {
+        font-size: 20px;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .info-label {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 6px;
+      }
+      .info-value {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 18px;
+        color: var(--ink);
+        font-weight: 400;
+      }
+      .info-value a {
+        color: var(--ink);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .info-value a:hover {
+        color: var(--gold);
+      }
+      .info-sub {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 4px;
+        font-weight: 300;
+        line-height: 1.5;
+      }
+
+      /* RIGHT: contact form */
+      .contact-form-wrap {
+        opacity: 0;
+        animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+      }
+      .contact-form {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 40px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+      }
+      .contact-form h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 26px;
+        font-weight: 400;
+        color: var(--ink);
+        margin-bottom: 28px;
+      }
+      .contact-form h2 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .field-group {
+        margin-bottom: 20px;
+      }
+      .field-label {
+        display: block;
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        margin-bottom: 8px;
+      }
+      .field-input,
+      .field-select,
+      .field-textarea {
+        width: 100%;
+        background: var(--bg);
+        border: 1.5px solid var(--border);
+        border-radius: 5px;
+        padding: 13px 16px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        color: var(--ink);
+        font-weight: 300;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        appearance: none;
+      }
+      .field-input::placeholder,
+      .field-textarea::placeholder {
+        color: rgba(74, 71, 64, 0.38);
+      }
+      .field-input:focus,
+      .field-select:focus,
+      .field-textarea:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(184, 146, 42, 0.1);
+      }
+      .field-select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8922A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        padding-right: 40px;
+        cursor: pointer;
+      }
+      .field-textarea {
+        resize: vertical;
+        min-height: 120px;
+        line-height: 1.6;
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .field-error {
+        display: none;
+        font-size: 11px;
+        color: #b94040;
+        margin-top: 5px;
+      }
+      .field-input.err,
+      .field-select.err,
+      .field-textarea.err {
+        border-color: #b94040;
+        box-shadow: 0 0 0 3px rgba(185, 64, 64, 0.08);
+      }
+
+      .submit-btn {
+        width: 100%;
+        background: var(--gold);
+        border: none;
+        border-radius: 5px;
+        padding: 16px;
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #fff;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        margin-top: 8px;
+      }
+      .submit-btn:hover {
+        background: var(--gold-hover);
+      }
+      .submit-btn:active {
+        transform: scale(0.99);
+      }
+
+      .form-success-msg {
+        display: none;
+        text-align: center;
+        padding: 32px;
+      }
+      .form-success-msg .check {
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+      .form-success-msg h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 26px;
+        color: var(--gold);
+        font-style: italic;
+        margin-bottom: 8px;
+      }
+      .form-success-msg p {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 300;
+      }
+
+      /* ORNAMENT */
+      .ornament {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 56px;
+        opacity: 0;
+        animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+      }
+      .ornament-line {
+        flex: 1;
+        height: 1px;
+        background: var(--gold-border);
+      }
+      .ornament-icon {
+        color: var(--gold);
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      /* FOOTER */
+      .footer {
+        text-align: center;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        opacity: 0;
+        animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+      }
+      .footer-mono {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .footer-mono a {
+        color: var(--gold);
+        text-decoration: none;
+      }
+      .footer-mono a:hover {
+        color: var(--gold-hover);
+      }
+
+      .deco-scales {
+        position: fixed;
+        right: -50px;
+        bottom: -30px;
+        width: 300px;
+        opacity: 0.06;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 720px) {
+        nav {
+          padding: 18px 20px;
+        }
+        .nav-links {
+          gap: 20px;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+        .contact-form {
+          padding: 28px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer">
+      <div class="bg-gradient"></div>
+      <div class="bg-grid"></div>
+    </div>
+    <svg class="deco-scales" viewBox="0 0 200 200" fill="none">
+      <line
+        x1="100"
+        y1="18"
+        x2="100"
+        y2="172"
+        stroke="#B8922A"
+        stroke-width="2"
+      />
+      <line
+        x1="28"
+        y1="58"
+        x2="172"
+        y2="58"
+        stroke="#B8922A"
+        stroke-width="2"
+      />
+      <circle
+        cx="28"
+        cy="58"
+        r="28"
+        stroke="#B8922A"
+        stroke-width="2"
+        fill="none"
+      />
+      <circle
+        cx="172"
+        cy="58"
+        r="28"
+        stroke="#B8922A"
+        stroke-width="2"
+        fill="none"
+      />
+      <rect
+        x="84"
+        y="168"
+        width="32"
+        height="8"
+        stroke="#B8922A"
+        stroke-width="2"
+        fill="none"
+      />
+    </svg>
+
+    <nav>
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 44 44" fill="none">
+            <circle
+              cx="22"
+              cy="22"
+              r="21"
+              stroke="#B8922A"
+              stroke-width="1.3"
+            />
+            <line
+              x1="22"
+              y1="8"
+              x2="22"
+              y2="36"
+              stroke="#B8922A"
+              stroke-width="1.3"
+            />
+            <line
+              x1="10"
+              y1="18"
+              x2="34"
+              y2="18"
+              stroke="#B8922A"
+              stroke-width="1.3"
+            />
+            <path
+              d="M10 18 C10 25 14 29 10 35"
+              stroke="#B8922A"
+              stroke-width="1.3"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <path
+              d="M34 18 C34 25 30 29 34 35"
+              stroke="#B8922A"
+              stroke-width="1.3"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <line
+              x1="19"
+              y1="36"
+              x2="25"
+              y2="36"
+              stroke="#B8922A"
+              stroke-width="1.3"
+            />
+          </svg>
+        </div>
+        <div class="nav-logo-text">Law<span>OnCall</span></div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+    </nav>
+
+    <main class="page">
+      <div class="page-header">
+        <div class="page-tag">Get in touch</div>
+        <h1 class="page-title">We'd love to<br /><em>hear from you.</em></h1>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Left: contact info -->
+        <div class="contact-info">
+          <div class="info-card">
+            <span class="info-icon">✉️</span>
+            <div class="info-label">Email us</div>
+            <div class="info-value">
+              <a href="mailto:hello@lawoncall.in">hello@lawoncall.in</a>
+            </div>
+            <p class="info-sub">
+              For general enquiries, partnerships, and press.
+            </p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">⚖️</span>
+            <div class="info-label">For lawyers</div>
+            <div class="info-value">
+              <a href="mailto:lawyers@lawoncall.in">lawyers@lawoncall.in</a>
+            </div>
+            <p class="info-sub">
+              Interested in joining our advocate network? Write to us.
+            </p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">📍</span>
+            <div class="info-label">Based in</div>
+            <div class="info-value">India</div>
+            <p class="info-sub">
+              Serving Delhi NCR at launch, expanding pan-India.
+            </p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon">🕐</span>
+            <div class="info-label">Response time</div>
+            <div class="info-value">Within 24 hours</div>
+            <p class="info-sub">
+              We read every message and reply to every one.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: contact form -->
+        <div class="contact-form-wrap">
+          <div class="contact-form">
+            <h2>Send us a <em>message</em></h2>
+
+            <div id="contactFormInner">
+              <div class="field-row">
+                <div class="field-group">
+                  <label class="field-label" for="cf-name">Full Name *</label>
+                  <input
+                    class="field-input"
+                    type="text"
+                    id="cf-name"
+                    placeholder="e.g. Rahul Sharma"
+                    autocomplete="name"
+                  />
+                  <div class="field-error" id="err-name">
+                    Please enter your name.
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="cf-email"
+                    >Email Address *</label
+                  >
+                  <input
+                    class="field-input"
+                    type="email"
+                    id="cf-email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                  />
+                  <div class="field-error" id="err-email">
+                    Please enter a valid email.
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="cf-subject">Subject *</label>
+                <select class="field-select" id="cf-subject">
+                  <option value="">Select a topic</option>
+                  <option value="General Enquiry">General Enquiry</option>
+                  <option value="Join as a Lawyer">Join as a Lawyer</option>
+                  <option value="Partnership / Business">
+                    Partnership / Business
+                  </option>
+                  <option value="Press / Media">Press / Media</option>
+                  <option value="Feedback">Feedback</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="field-error" id="err-subject">
+                  Please select a subject.
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="cf-message">Message *</label>
+                <textarea
+                  class="field-textarea"
+                  id="cf-message"
+                  placeholder="Tell us what's on your mind..."
+                ></textarea>
+                <div class="field-error" id="err-message">
+                  Please write a message.
+                </div>
+              </div>
+
+              <button
+                class="submit-btn"
+                id="cf-submit"
+                onclick="submitContact()"
+              >
+                Send Message
+              </button>
+            </div>
+
+            <div class="form-success-msg" id="cf-success">
+              <div class="check">✅</div>
+              <h3>Message received.</h3>
+              <p>
+                Thank you for reaching out. We'll get back to you within 24
+                hours.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <span class="ornament-icon">⚖</span>
+        <div class="ornament-line"></div>
+      </div>
+
+      <footer class="footer">
+        <p class="footer-mono">
+          © 2026 LawOnCall &nbsp;·&nbsp;
+          <a href="mailto:hello@lawoncall.in">hello@lawoncall.in</a>
+          &nbsp;·&nbsp; India
+        </p>
+      </footer>
+    </main>
+
+    <script>
+      // Replace with your Apps Script URL (same one or a separate sheet)
+      const CONTACT_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbzv2DLxvLEN7jmOy2F56a9hOszDz19T-3-UzTjGjYM92bcHACfj67qTwS2FrT14vHJMmg/exec";
+
+      function validate(id, errorId, fn) {
+        const el = document.getElementById(id);
+        const err = document.getElementById(errorId);
+        const ok = fn(el.value.trim());
+        el.classList.toggle("err", !ok);
+        err.style.display = ok ? "none" : "block";
+        return ok;
+      }
+
+      function submitContact() {
+        const nameOk = validate("cf-name", "err-name", (v) => v.length >= 2);
+        const emailOk = validate("cf-email", "err-email", (v) =>
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+        );
+        const subjectOk = validate(
+          "cf-subject",
+          "err-subject",
+          (v) => v !== "",
+        );
+        const msgOk = validate(
+          "cf-message",
+          "err-message",
+          (v) => v.length >= 10,
+        );
+
+        if (!nameOk || !emailOk || !subjectOk || !msgOk) return;
+
+        const btn = document.getElementById("cf-submit");
+        btn.textContent = "Sending...";
+        btn.disabled = true;
+
+        const payload = {
+          type: "contact",
+          name: document.getElementById("cf-name").value.trim(),
+          email: document.getElementById("cf-email").value.trim(),
+          subject: document.getElementById("cf-subject").value,
+          message: document.getElementById("cf-message").value.trim(),
+        };
+
+        fetch(CONTACT_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .then(() => {
+            document.getElementById("contactFormInner").style.display = "none";
+            document.getElementById("cf-success").style.display = "block";
+          })
+          .catch(() => {
+            btn.textContent = "Send Message";
+            btn.disabled = false;
+            alert(
+              "Something went wrong. Please email us directly at hello@lawoncall.in",
+            );
+          });
+      }
+
+      // Live validation on blur
+      ["cf-name", "cf-email", "cf-subject", "cf-message"].forEach((id) => {
+        const el = document.getElementById(id);
+        el.addEventListener("blur", () => el.classList.remove("err"));
+      });
+    </script>
+  </body>
+</html>

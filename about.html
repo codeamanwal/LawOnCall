@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — LawOnCall</title>
+  <meta name="description" content="At LawOnCall, we are transforming how our people access legal help — making legal consultation faster, simpler, and more accessible."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ffffff'/%3E%3Cg stroke='%23B8922A' stroke-width='2.4' stroke-linecap='round' fill='none'%3E%3Cline x1='32' y1='10' x2='32' y2='54'/%3E%3Cline x1='14' y1='22' x2='50' y2='22'/%3E%3Cpath d='M14 22 C14 31 19 35 14 43'/%3E%3Cpath d='M50 22 C50 31 45 35 50 43'/%3E%3Cline x1='26' y1='54' x2='38' y2='54'/%3E%3C/g%3E%3C/svg%3E"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #B8922A; --gold-hover: #9A7820;
+      --gold-dim: rgba(184,146,42,0.09); --gold-border: rgba(184,146,42,0.22);
+      --ink: #12110E; --ink-mid: #2C2A25; --ink-soft: #4A4740;
+      --bg: #FAFAF7; --bg-card: #FFFFFF; --muted: #7A7670; --border: #E4E0D8;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+    .bg-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .bg-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(184,146,42,0.08) 0%, transparent 65%), radial-gradient(ellipse 40% 30% at 90% 90%, rgba(184,146,42,0.05) 0%, transparent 55%), linear-gradient(180deg, #FAFAF7 0%, #F4F1EB 100%); }
+    .bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(184,146,42,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(184,146,42,0.06) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 100% 55% at 50% 0%, black 20%, transparent 75%); }
+
+    nav { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; border-bottom: 1px solid var(--border); background: rgba(250,250,247,0.85); backdrop-filter: blur(12px); }
+    .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .nav-logo-icon { width: 34px; height: 34px; }
+    .nav-logo-icon svg { width: 100%; height: 100%; }
+    .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.03em; color: var(--ink); }
+    .nav-logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a.active { border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+
+    .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 72px 24px 80px; }
+
+    /* PAGE HEADER */
+    .page-header { margin-bottom: 64px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s forwards; }
+    .page-tag { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .page-tag::after { content: ''; flex: 1; height: 1px; background: var(--gold-border); max-width: 60px; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 6vw, 76px); font-weight: 300; line-height: 1.05; color: var(--ink); letter-spacing: -0.01em; }
+    .page-title em { font-style: italic; color: var(--gold); }
+
+    /* MISSION STATEMENT — hero card */
+    .mission-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 40px 48px;
+      margin-bottom: 64px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.25s forwards;
+    }
+    .mission-card blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 300; line-height: 1.5;
+      color: var(--ink); font-style: italic;
+    }
+    .mission-card blockquote strong { font-style: normal; font-weight: 600; color: var(--gold); }
+
+    /* ORNAMENT */
+    .ornament { display: flex; align-items: center; gap: 16px; margin: 0 0 56px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.35s forwards; }
+    .ornament-line { flex: 1; height: 1px; background: var(--gold-border); }
+    .ornament-icon { color: var(--gold); font-size: 18px; flex-shrink: 0; }
+
+    /* VALUES GRID */
+    .section-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.45s forwards; }
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 72px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.55s forwards; }
+    .value-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 32px 24px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .value-card:hover { border-color: var(--gold-border); box-shadow: 0 6px 24px rgba(184,146,42,0.10); transform: translateY(-2px); }
+    .value-number { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 16px; }
+    .value-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+    .value-desc { font-size: 13px; line-height: 1.7; color: var(--muted); font-weight: 300; }
+
+    /* STORY SECTION */
+    .story-section { margin-bottom: 72px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.65s forwards; }
+    .story-section h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4vw, 42px); font-weight: 300; color: var(--ink); margin-bottom: 24px; }
+    .story-section h2 em { font-style: italic; color: var(--gold); }
+    .story-section p { font-size: 15px; line-height: 1.85; color: var(--ink-soft); font-weight: 300; margin-bottom: 16px; max-width: 680px; }
+    .story-section p:last-child { margin-bottom: 0; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 72px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.75s forwards; }
+    .stat { background: var(--bg-card); padding: 36px 24px; text-align: center; }
+    .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+    /* CTA STRIP */
+    .cta-strip { background: var(--bg-card); border: 1px solid var(--gold-border); border-radius: 8px; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 64px; opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.85s forwards; box-shadow: 0 2px 16px rgba(184,146,42,0.06); }
+    .cta-strip-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--ink); margin-bottom: 6px; }
+    .cta-strip-text p { font-size: 14px; color: var(--muted); font-weight: 300; }
+    .cta-btn { background: var(--gold); color: #fff; border: none; border-radius: 4px; padding: 14px 28px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.1s; white-space: nowrap; flex-shrink: 0; }
+    .cta-btn:hover { background: var(--gold-hover); }
+    .cta-btn:active { transform: scale(0.98); }
+
+    /* FOOTER */
+    .footer { text-align: center; padding-top: 16px; border-top: 1px solid var(--border); opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.95s forwards; }
+    .footer-mono { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+    .footer-mono a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    .footer-mono a:hover { color: var(--gold-hover); }
+
+    .deco-scales { position: fixed; right: -50px; bottom: -30px; width: 300px; opacity: 0.06; pointer-events: none; z-index: 0; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 680px) {
+      nav { padding: 18px 20px; }
+      .nav-links { gap: 20px; }
+      .mission-card { padding: 28px 24px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      .cta-strip { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-layer"><div class="bg-gradient"></div><div class="bg-grid"></div></div>
+<svg class="deco-scales" viewBox="0 0 200 200" fill="none"><line x1="100" y1="18" x2="100" y2="172" stroke="#B8922A" stroke-width="2"/><line x1="28" y1="58" x2="172" y2="58" stroke="#B8922A" stroke-width="2"/><circle cx="28" cy="58" r="28" stroke="#B8922A" stroke-width="2" fill="none"/><circle cx="172" cy="58" r="28" stroke="#B8922A" stroke-width="2" fill="none"/><rect x="84" y="168" width="32" height="8" stroke="#B8922A" stroke-width="2" fill="none"/></svg>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="21" stroke="#B8922A" stroke-width="1.3"/><line x1="22" y1="8" x2="22" y2="36" stroke="#B8922A" stroke-width="1.3"/><line x1="10" y1="18" x2="34" y2="18" stroke="#B8922A" stroke-width="1.3"/><path d="M10 18 C10 25 14 29 10 35" stroke="#B8922A" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M34 18 C34 25 30 29 34 35" stroke="#B8922A" stroke-width="1.3" fill="none" stroke-linecap="round"/><line x1="19" y1="36" x2="25" y2="36" stroke="#B8922A" stroke-width="1.3"/></svg></div>
+    <div class="nav-logo-text">Law<span>OnCall</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About Us</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="page-tag">Our story</div>
+    <h1 class="page-title">Built for <em>every</em> Indian<br>who needs legal help.</h1>
+  </div>
+
+  <!-- Mission card -->
+  <div class="mission-card">
+    <blockquote>
+      "At LawOnCall, we are transforming how our people access legal help —
+      making legal consultation <strong>faster</strong>, <strong>simpler</strong>,
+      and <strong>more accessible</strong>."
+    </blockquote>
+  </div>
+
+  <div class="ornament"><div class="ornament-line"></div><span class="ornament-icon">⚖</span><div class="ornament-line"></div></div>
+
+  <!-- Story -->
+  <div class="story-section">
+    <h2>Why we <em>exist</em></h2>
+    <p>
+      Legal problems don't wait for business hours. A property dispute, an unfair dismissal,
+      a family matter — these crises arrive without notice and demand immediate, trustworthy guidance.
+      Yet for most Indians, getting that guidance means days of searching, waiting, and spending
+      money they don't have.
+    </p>
+    <p>
+      LawOnCall was built to change that. We believe access to legal help is not a privilege
+      reserved for the few — it is a right that every person deserves. Our platform connects
+      verified, bar council-registered advocates with people who need them, in under 60 minutes,
+      from anywhere in India.
+    </p>
+    <p>
+      Our mission is to make trusted legal guidance accessible to everyone,
+      while upholding the principle of justice for all.
+    </p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-number">60</div>
+      <div class="stat-label">Minutes or less</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">6+</div>
+      <div class="stat-label">Issue categories</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Bar council verified</div>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <div class="section-label">What we stand for</div>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-number">01</div>
+      <div class="value-title">Speed without compromise</div>
+      <p class="value-desc">A verified lawyer, matched to your issue, within 60 minutes. Legal help that moves at the pace of your life.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-number">02</div>
+      <div class="value-title">Radical accessibility</div>
+      <p class="value-desc">Plain language. Transparent pricing. No hidden fees. Legal guidance that doesn't require a law degree to understand.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-number">03</div>
+      <div class="value-title">Trust above everything</div>
+      <p class="value-desc">Every advocate on our platform is bar council registered, verified, and accountable. Your case details stay private, always.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="cta-strip-text">
+      <h3>Be the first to know when we launch.</h3>
+      <p>Join our early access list — no spam, just one email when we go live.</p>
+    </div>
+    <a href="index.html#waitlist" class="cta-btn">Join Waitlist</a>
+  </div>
+
+  <footer class="footer">
+    <p class="footer-mono">© 2026 LawOnCall &nbsp;·&nbsp; <a href="mailto:hello@lawoncall.in">hello@lawoncall.in</a> &nbsp;·&nbsp; India</p>
+  </footer>
+
+</main>
+</body>
+</html>
